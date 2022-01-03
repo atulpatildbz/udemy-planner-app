@@ -8,6 +8,7 @@ function App() {
     const [totalTime, setTotalTime] = useState(0);
     const [remainingTimeVelocity, setRemainingTimeVelocity] = useState(0);
     const [selectedResult, setSelectedResult] = useState(null);
+    const [excludeSundays, setExcludeSundays] = useState(false);
     return (
         <div className="App">
             <header className="App-header">
@@ -22,6 +23,8 @@ function App() {
                         setRemainingTimeVelocity={setRemainingTimeVelocity}
                         selectedResult={selectedResult}
                         setSelectedResult={setSelectedResult}
+                        excludeSundays={excludeSundays}
+                        setExcludeSundays={setExcludeSundays}
                     />
                 </div>
                 <div className="col-md-6">
@@ -29,6 +32,7 @@ function App() {
                         setTotalTime={setTotalTime}
                         remainingTimeVelocity={remainingTimeVelocity}
                         selectedResult={selectedResult}
+                        excludeSundays={excludeSundays}
                     />
                 </div>
             </div>

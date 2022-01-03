@@ -9,13 +9,14 @@ export const AnalysisComponent = ({
     setRemainingTimeVelocity,
     selectedResult,
     setSelectedResult,
+    excludeSundays,
+    setExcludeSundays,
 }) => {
     // default start date should be 5th Dec 2021
     const [startDate, setStartDate] = useState(new Date("2021-12-05"));
     // default end date should be 15th Jan 2022
     const [endDate, setEndDate] = useState(new Date("2022-01-15"));
     const [remainingTimeInSeconds, setRemainingTimeInSeconds] = useState(totalTime);
-    const [excludeSundays, setExcludeSundays] = useState(false);
     // convert totalTime from seconds to human readable format
     const readableTime = convertSecondsToReadableTime(totalTime);
 

@@ -2,7 +2,12 @@ import { useEffect, useMemo, useState } from "react";
 import { udemyData } from "./constants/data.js";
 import "./ListComponent.css";
 import { convertSecondsToReadableTime } from "./utils.js";
-export const ListComponent = ({ setTotalTime, remainingTimeVelocity, selectedResult }) => {
+export const ListComponent = ({
+    setTotalTime,
+    remainingTimeVelocity,
+    selectedResult,
+    excludeSundays,
+}) => {
     let chapterTitles = useMemo(() => {
         return [];
     }, []);
@@ -56,12 +61,16 @@ export const ListComponent = ({ setTotalTime, remainingTimeVelocity, selectedRes
                 // if the totalTime is greater than the remainingTimeVelocity, then increment the startDate by 1 day
                 if (plan[startDate].totalTime > remainingTimeVelocity) {
                     startDate.setDate(startDate.getDate() + 1);
+                    // if excludeSundays is true and the day of the week is a Sunday, then increment date by 1 day
+                    if (excludeSundays && startDate.getDay() === 0) {
+                        startDate.setDate(startDate.getDate() + 1);
+                    }
                     plan[startDate] = { totalTime: 0, lectures: [] };
                 }
             }
             setPlan(plan);
         }
-    }, [startingIndex, selectedResult, remainingTimeVelocity, plannerStartDate]);
+    }, [startingIndex, selectedResult, remainingTimeVelocity, plannerStartDate, excludeSundays]);
 
     return (
         <div className="planner-container">
