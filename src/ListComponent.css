@@ -17,3 +17,14 @@ h3 {
 .insights-container {
   margin-top: 2rem;
 }
+
+/* keep border around td */
+td {
+  border: 1px solid #a1a1a1;
+  padding: 0.5rem;
+}
+
+/* give color to total row */
+tr.total-row {
+  background-color: #ddd;
+}

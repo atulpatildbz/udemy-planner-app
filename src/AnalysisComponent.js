@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Search from "./Search";
 import { udemyData } from "./constants/data";
+import { convertSecondsToReadableTime } from "./utils";
 
 export const AnalysisComponent = ({
     totalTime,
@@ -15,13 +16,6 @@ export const AnalysisComponent = ({
     const [endDate, setEndDate] = useState(new Date("2022-01-15"));
     const [remainingTimeInSeconds, setRemainingTimeInSeconds] = useState(totalTime);
     const [excludeSundays, setExcludeSundays] = useState(false);
-    const convertSecondsToReadableTime = seconds => {
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor((seconds - hours * 3600) / 60);
-        // show hours only if it's greater than 0
-        const hoursString = hours > 0 ? `${hours}h ` : "";
-        return `${hoursString}${minutes}m`;
-    };
     // convert totalTime from seconds to human readable format
     const readableTime = convertSecondsToReadableTime(totalTime);
 
@@ -122,8 +116,8 @@ export const AnalysisComponent = ({
                     <b>{convertSecondsToReadableTime(remainingTimeVelocity)}</b> per day
                     {/* show current velocity */}
                     <h4>Current Velocity</h4>
-                    In the last {getDaysBetweenDates(startDate, new Date())} days, you have
-                    completed{" "}
+                    In the last {getDaysBetweenDates(startDate, new Date())} days, your velocity has
+                    been{" "}
                     <b>
                         {convertSecondsToReadableTime(
                             (totalTime - remainingTimeInSeconds) /

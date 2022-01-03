@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { udemyData } from "./constants/data.js";
 import "./ListComponent.css";
+import { convertSecondsToReadableTime } from "./utils.js";
 export const ListComponent = ({ setTotalTime, remainingTimeVelocity, selectedResult }) => {
     let chapterTitles = useMemo(() => {
         return [];
@@ -50,7 +51,7 @@ export const ListComponent = ({ setTotalTime, remainingTimeVelocity, selectedRes
                 // if the lecture has a time_estimation, then add it to the totalTime and add the title to the lectures array
                 if (udemyData.results[i].asset && udemyData.results[i].asset.time_estimation) {
                     plan[startDate].totalTime += udemyData.results[i].asset.time_estimation;
-                    plan[startDate].lectures.push(udemyData.results[i].title);
+                    plan[startDate].lectures.push(udemyData.results[i]);
                 }
                 // if the totalTime is greater than the remainingTimeVelocity, then increment the startDate by 1 day
                 if (plan[startDate].totalTime > remainingTimeVelocity) {
@@ -102,8 +103,25 @@ export const ListComponent = ({ setTotalTime, remainingTimeVelocity, selectedRes
                             })}
                         </h4>
                         {plan[key].lectures.map(lecture => {
-                            return <p key={lecture}>{lecture}</p>;
+                            // return a table row with object_index as first td, title as second td, time_estimation as third td
+                            return (
+                                <tr key={lecture.object_index}>
+                                    <td>{lecture.object_index}</td>
+                                    <td>{lecture.title}</td>
+                                    <td>
+                                        {convertSecondsToReadableTime(
+                                            lecture.asset.time_estimation,
+                                        )}
+                                    </td>
+                                </tr>
+                            );
                         })}
+                        {/* in the end, add a row where last td is sum of all time_estimates for this key */}
+                        <tr className="total-row">
+                            <td></td>
+                            <td>Total</td>
+                            <td>{convertSecondsToReadableTime(plan[key].totalTime)}</td>
+                        </tr>
                     </div>
                 );
             })}
